@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useEffect, useRef, useState} from 'react';
 import {Image, Pressable, StyleSheet, Text, View} from "react-native";
 import {Chip, List} from "react-native-paper";
-import Animated, { useAnimatedStyle, useSharedValue } from 'react-native-reanimated';
+import Animated, {useAnimatedStyle, useSharedValue, withTiming, Easing} from 'react-native-reanimated';
 
 type ProductItemProps = {
     name: String;
@@ -94,11 +94,11 @@ const ProductItem = (props: ProductItemProps) => {
 
     const toggleExpand = () => {
         if (isExpanded) {
-            // Collapse
-            animatedHeight.value = 0;
+            // Collapse with easing
+            animatedHeight.value = withTiming(0, { duration: 600, easing: Easing.ease });
         } else {
-            // Expand to measured height
-            animatedHeight.value = contentHeight;
+            // Expand to measured height with easing
+            animatedHeight.value = withTiming(contentHeight, { duration: 600, easing: Easing.ease });
         }
         setIsExpanded(!isExpanded);
     };
